@@ -170,6 +170,7 @@ class DBThread(KillableThread):
         self.g = g
         self.db_user = self.g.config.get("db", "user")
         self.db_passwd = self.g.config.get("db", "password")
+        self.db_host = self.g.config.get("db", "host")
         self.tags = []
         self.door_state = {}
         for k in port_door_map.values():
@@ -187,7 +188,7 @@ class DBThread(KillableThread):
                 cursor = None
                 try:
                     # We used to use a persistent database connection.  However this has strange 
-                    db = MySQLdb.connect(host="localhost", user=self.db_user,
+                    db = MySQLdb.connect(host=self.db_host, user=self.db_user,
                             passwd=self.db_passwd, db="hackspace")
                     cursor = db.cursor()
                     rc = fn(self, cursor, *args, **kwargs)
@@ -1244,7 +1245,7 @@ op.add_option("-d", "--debug", action="store_true", dest="debug", default=False)
 (options, args) = op.parse_args()
 do_debug = options.debug
 
-cfg = ConfigParser.SafeConfigParser()
+cfg = ConfigParser.SafeConfigParser({'db.host':'localhost'})
 cfg.read("/etc/marvin.conf")
 
 dc = daemon.DaemonContext()

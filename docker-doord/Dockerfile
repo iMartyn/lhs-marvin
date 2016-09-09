@@ -6,4 +6,4 @@ RUN apk --update add --virtual build-dependencies python-dev build-base mysql-de
 ADD doord.py /root/doord.py
 ADD docker-doord/doordwrapper.sh /root/doordwrapper.sh
 ADD docker-doord/marvin.conf.template /root/marvin.conf.template
-CMD python /root/doordwrapper.sh
+CMD /bin/sh /root/doordwrapper.sh

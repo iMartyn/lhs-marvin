@@ -1,0 +1,20 @@
+version: '2'
+services:
+  doord:
+    build:
+      context: ..
+      dockerfile: docker-doord/Dockerfile
+    depends_on:
+     - db
+    environment:
+      MYSQLHOST: db
+      MYSQLPASS: hackspace
+  db:
+    image: mysql
+    volumes:
+      - ../useradmin/db:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: hackspace
+      MYSQL_DATABASE: hackspace
+      MYSQL_USER: hackspace
+      MYSQL_PASSWORD: hackspace

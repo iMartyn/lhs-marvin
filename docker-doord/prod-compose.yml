@@ -1,0 +1,12 @@
+version: '2'
+services:
+  doord:
+    build:
+      context: ..
+      dockerfile: docker-doord/Dockerfile
+    environment:
+      MYSQLHOST: db
+      # password needs to be set
+      MYSQLPASS: hackspace
+    # host network is where the wifi is that we're scanning for presence.
+    network_mode: "host"
